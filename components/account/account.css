@@ -95,6 +95,8 @@
 }
 .account-shell .auth-input::placeholder { color: #738779; opacity: 1; }
 .account-shell .auth-input:focus { outline: none; border-color: #aacf96; box-shadow: 0 0 0 3px #b9e5a019; }
+.account-shell .auth-input--rtl { direction: rtl; text-align: right; }
+.account-shell .auth-input--password { padding-left: 52px; }
 .auth-password-toggle { position: absolute; left: 7px; width: 38px; height: 38px; border: 0; background: none; color: #a3b7a4; border-radius: 8px; display: grid; place-items: center; cursor: pointer; padding: 0; }
 .auth-password-toggle:hover { color: #ebf6df; background: #23372a; }
 .auth-hint { color: #9aaea0; font-size: 11px; margin: -3px 0 0; }
