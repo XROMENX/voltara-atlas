@@ -1,31 +1,25 @@
 # Voltara Atlas | ولتارا
 
-A modular, Persian-first electrical equipment atlas. The initial Power Transformer module opens the existing, independently maintained atlas at https://xromenx.github.io/power-transformer-altlas/.
+Persian electrical equipment atlas with a server-rendered catalogue, integrated Three.js transformer, managed sign-in, and private database-backed notes/bookmarks.
 
-## Source
+Canonical full application: https://voltara-atlas.romie-m.chatgpt.site
 
-Based on the visual language and module concept of https://github.com/XROMENX/power-transformer-altlas (reviewed v14). The existing application's code and assets are not duplicated. The hub uses a new schematic illustration and retains the dark sage visual palette, Persian RTL layout, and technical editorial style.
+## Stack
+TypeScript, React, Vinext (Next.js-compatible routing), Cloudflare Workers and D1. Sites supplies trusted identity; deploy behind its authenticated ingress. Do not expose this Worker directly while trusting arbitrary identity headers.
 
-## Structure
+## Development
+`npm run dev` starts local development. `npm run build` builds the application. `node --experimental-strip-types --test tests/account-validation.test.mjs` checks input and origin rules. `npx tsc --noEmit` checks types. `node public/transformer/tests/explosion.mjs` checks geometry.
 
-- `dist/index.html`: homepage and featured transformer module
-- `dist/style.css`: responsive styling
-- `dist/modules.js`: module registry
-- `dist/app.js`: registry rendering
-- `dist/icon.svg`: brand mark
+Set the hosting manifest D1 binding to `DB`. SQL migrations in `drizzle/` are applied by Sites during publication. Local development requires applying migrations with Wrangler; see ARCHITECTURE.md for release and review boundaries.
 
-No dependencies or build step. Serve `dist` using any static server. For example: `python3 -m http.server 8080 --directory dist`.
+## Adding equipment
+Add metadata to `lib/equipment.ts`; add the module's assets, component IDs, references and text alternative. Catalogue rendering is server-side. Heavy transformer code loads only on its module page.
 
-## Adding a module
+## Identity
+Visitors use ChatGPT sign-in. Notes/bookmarks APIs require identity and scope all records by the authenticated owner. Writes also validate origin and input. Account deletion removes Voltara records, not the external ChatGPT account. Passwords are never collected by this application.
 
-Add an object to `dist/modules.js` with a unique `id`, Persian `title`, `english` label, and `symbol`. Set `status: 'planned'` until its site is ready. To activate it, set `status: 'available'` and supply its `url`. Active modules render as links automatically; planned modules remain non-interactive. The active module count updates automatically. The Power Transformer remains the featured module; its URL is sourced from the registry.
+## Transformer provenance
+Preserved source: https://github.com/XROMENX/power-transformer-altlas at 6ce5a08eec00170ecc7b60b4ae03bf3d9159b063. Geometry, technical reference and creator attribution retained. Educational model; not manufacturer-certified. Service-worker registration is disabled in this integrated version to avoid caching account data. Text catalogue works without WebGL.
 
-Switchgear, electric machines, and protection/control are illustrative future topics, not implemented tools or commitments.
-
-## GitHub Pages
-
-A workflow is included to publish `dist` when pushed to `main`. In repository Settings → Pages, choose GitHub Actions as the source. The hub links to the original transformer site in the same tab; browser Back returns to the hub. No iframe or cross-origin dependency is required.
-
-## Brand
-
-Voltara Atlas / ولتارا. Working brand name; no trademark or domain availability claim is made.
+## Hosting
+GitHub Pages cannot execute the account backend. Its publication directory is `pages-redirect/`, containing a link to the full application. The source repository includes the full backend and frontend; Sites owns production builds and migrations.

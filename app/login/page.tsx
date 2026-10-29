@@ -1,0 +1,4 @@
+import { getChatGPTUser,chatGPTSignInPath } from '../chatgpt-auth';
+import AccountShell from '../../components/account/AccountShell';
+export const dynamic='force-dynamic';
+export default async function Login({searchParams}:{searchParams:Promise<{returnTo?:string}>}){const user=await getChatGPTUser();const params=await searchParams;return <AccountShell title="حساب ولتارا"><section className="account-panel"><h2>{user?'خوش آمدید':'دانسته‌هایتان را همراه داشته باشید'}</h2><p>یادداشت‌های شخصی و نشانک‌ها را ذخیره کنید و در دستگاه دیگر ادامه دهید.</p>{user?<><p>{user.displayName}</p><a className="account-button" href="/account">رفتن به حساب</a></>:<><a className="account-button" href={chatGPTSignInPath(params.returnTo||'/account')} target="_top">ورود با ChatGPT</a><p>ورود و بازیابی دسترسی از طریق حساب ChatGPT انجام می‌شود. ولتارا گذرواژه شما را دریافت نمی‌کند.</p></>}</section></AccountShell>}

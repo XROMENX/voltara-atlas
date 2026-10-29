@@ -1,0 +1,2 @@
+import './account.css';
+export default function AccountShell({title,children}:{title:string;children:React.ReactNode}){return <div className="account-shell" dir="rtl"><header><a href="/">ϟ ولتارا <small>VOLTARA ATLAS</small></a><nav aria-label="حساب"><a href="/notes">یادداشت‌ها</a><a href="/bookmarks">نشانک‌ها</a><a href="/account">حساب</a></nav></header><main id="main"><a href="/">← کتابخانه تجهیزات</a><h1>{title}</h1>{children}</main></div>}
