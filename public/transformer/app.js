@@ -3,7 +3,7 @@ import {OrbitControls} from './vendor/OrbitControls.js';
 import {parts} from './data.js';
 const $=id=>document.getElementById(id), fa=n=>Number(n).toLocaleString('fa-IR');
 const host=$('viewport');
-let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});}catch(e){$('loading').textContent='نمایش سه‌بعدی به WebGL نیاز دارد. مرورگر را به‌روزرسانی کنید؛ فهرست قطعات همچنان قابل استفاده است.';}
+let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});}catch(e){$('loading').textContent='مدل سه‌بعدی در این مرورگر نمایش داده نمی‌شود. مرورگر را به‌روزرسانی کنید یا فهرست قطعات را بخوانید.';}
 const cutPlane=new THREE.Plane(new THREE.Vector3(0,0,-1),0);
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.1,150);camera.position.set(13,9,15);
 const controls=renderer?new OrbitControls(camera,renderer.domElement):null;
