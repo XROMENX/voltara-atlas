@@ -24,7 +24,7 @@ test('API enforces user ownership with a real SQLite database',async()=>{
     const rows=statement.all(...params);return {rows:method==='get'?rows[0]:rows};
   },{schema});
   let user=null;
-  const route=compile('../app/api/records/route.ts',{'./validation':{isSameOrigin,validRecord},'drizzle-orm':orm,'../../chatgpt-auth':{getChatGPTUser:async()=>user},'../../../db':{getDb:()=>db},'../../../db/schema':schema});
+  const route=compile('../app/api/records/route.ts',{'./validation':{isSameOrigin,validRecord},'drizzle-orm':orm,'../../auth':{getUser:async()=>user},'../../../db':{getDb:()=>db},'../../../db/schema':schema});
   const origin='https://voltara.test';
   const req=(method,payload,id)=>new Request(`${origin}/api/records?kind=note${id?'&id='+id:''}`,{method,headers:{origin,'content-type':'application/json'},...(payload?{body:JSON.stringify(payload)}:{})});
   const payload={kind:'note',title:'Test note',body:'Only owner A',equipmentId:'power-transformer',componentId:'core'};

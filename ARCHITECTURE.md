@@ -1,20 +1,13 @@
 # Voltara architecture
 
-Canonical application: https://voltara-atlas.romie-m.chatgpt.site
-GitHub Pages serves a forwarding page only. GitHub contains the application source; Sites builds the Worker deployment.
+React/TypeScript pages and APIs run in a Cloudflare Worker using Vinext. The standalone build uses the Cloudflare Vite plugin and no Sites runtime plugin.
 
-## Boundaries
-- TypeScript/React application: catalogue, accounts, personal records.
-- Preserved Three.js transformer module: public/transformer; original geometry and referenced technical content retained.
-- Managed identity: trusted Sites ingress headers; never deploy this authentication adapter behind an untrusted proxy that accepts client-supplied identity headers.
-- D1: user-owned records. Each query/mutation must scope by authenticated identity. No passwords in application storage.
-- No model assets or credentials stored in private notes cache; viewer service worker disabled in this distribution.
+Better Auth handles email/password accounts, verification, recovery and cookie sessions. Database-backed rate limiting uses Cloudflare's trusted cf-connecting-ip header. Secrets belong in Worker settings. Resend delivers verification and reset links. Users must verify their email before signing in.
 
-## Release and verification
-Run TypeScript checks, account authorization tests, model syntax checks and production build before publication. Check live catalogue, component navigation and sign-in flow. Migrations are append-only after application. Restore code by redeploying a known source revision; database restore is separate and must be rehearsed before wider launch.
+D1 stores authentication tables and user_records. Each notes/bookmarks query scopes ownership by the validated session user ID. Forged oai-authenticated-user-* headers grant no access. Deleting personal records preserves the independent login account.
 
-## Content governance
-The transformer remains an illustrative educational model, not a manufacturer-certified digital twin. Preserve source references and attribution. A qualified electrical reviewer must approve technical changes; software tests cannot certify electrical accuracy. Add a second equipment module only once it has stable component IDs, bilingual names, reference provenance, a text alternative and module-specific asset loading.
+All asset requests run through worker/independent.ts. The /transformer/ prefix requires a session, including model JavaScript, vendor assets and HTML. Responses from that prefix are private/no-store. Only font and reference manual aliases are public; /catalog.html is a static text alternative. No viewer service worker is registered. The original externally hosted/public copies remain outside this access boundary.
 
-## Remaining operational work
-Real device performance/accessibility audits, external-user identity acceptance tests, backup restore drill, independent technical review and alerting policy require explicit verification before broad production use. No claim of certification or exhaustive audit is made.
+Deployment applies checked-in migrations before publishing. D1_DATABASE_ID is supplied by the owner's build configuration; auth and mail credentials are runtime secrets. See DEPLOY.md for setup and live acceptance checks.
+
+Technical content and model geometry remain educational, not manufacturer certification. Electrical review, real-device WebGL performance testing, live mail acceptance, monitoring and database restore drills remain operational follow-up work.

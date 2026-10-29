@@ -1,12 +1,12 @@
 import { isSameOrigin, validRecord } from './validation';
 import { and, desc, eq } from 'drizzle-orm';
-import { getChatGPTUser } from '../../chatgpt-auth';
+import { getUser } from '../../auth';
 import { getDb } from '../../../db';
 import { records } from '../../../db/schema';
 export const dynamic = 'force-dynamic';
 const response = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'private, no-store' } });
 export async function GET(request: Request) {
-  const user = await getChatGPTUser();
+  const user = await getUser();
   if (!user) return response({error:'برای ادامه وارد حساب شوید.'}, 401);
   const kind = new URL(request.url).searchParams.get('kind');
   if (kind !== 'note' && kind !== 'bookmark') return response({error:'نوع مورد نامعتبر است.'}, 400);
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   } catch { return response({error:'دریافت اطلاعات ممکن نشد. دوباره تلاش کنید.'},503); }
 }
 export async function POST(request: Request) {
-  const user = await getChatGPTUser();
+  const user = await getUser();
   if (!user) return response({error:'برای ادامه وارد حساب شوید.'},401);
   if (!isSameOrigin(request)) return response({error:'درخواست نامعتبر است.'},403);
   if (!request.headers.get('content-type')?.startsWith('application/json')) return response({error:'قالب درخواست نامعتبر است.'},415);
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   }catch{return response({error:'ذخیره انجام نشد. دوباره تلاش کنید.'},503);}
 }
 export async function DELETE(request: Request) {
-  const user=await getChatGPTUser(); if(!user)return response({error:'برای ادامه وارد حساب شوید.'},401);
+  const user=await getUser(); if(!user)return response({error:'برای ادامه وارد حساب شوید.'},401);
   if(!isSameOrigin(request))return response({error:'درخواست نامعتبر است.'},403);
   const id=new URL(request.url).searchParams.get('id'); if(!id || !/^[a-f0-9-]{36}$/.test(id))return response({error:'شناسه نامعتبر است.'},400);
   try{const deleted=await getDb().delete(records).where(and(eq(records.id,id),eq(records.ownerId,user.userId))).returning({id:records.id}); return deleted.length?response({ok:true}):response({error:'مورد پیدا نشد.'},404);}catch{return response({error:'حذف انجام نشد.'},503);}
