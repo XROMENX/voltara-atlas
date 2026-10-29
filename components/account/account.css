@@ -1,1 +1,170 @@
-@font-face{font-family:Vazir;src:url('/transformer/vendor/vazir.woff2');font-display:swap}.account-shell{min-height:100vh;background:#101819;color:#e6ede4;font:16px Vazir,Tahoma,sans-serif;line-height:1.9}.account-shell *{box-sizing:border-box}.account-shell header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px max(24px,6vw);border-bottom:1px solid #405047}.account-shell a{color:#c3dfa7;text-decoration:none}.account-shell header>a{font-size:23px}.account-shell small{display:block;color:#b1bfb3}.account-shell nav{display:flex;gap:24px}.account-shell main{max-width:900px;margin:auto;padding:35px 24px 80px}.account-shell h1{font-size:32px}.account-shell h2{font-size:21px}.account-panel{background:#1a2823;border:1px solid #415548;padding:24px;border-radius:12px;margin:24px 0}.account-shell label{display:block;margin:16px 0}.account-shell input,.account-shell textarea,.account-shell select{display:block;width:100%;font:inherit;color:inherit;background:#101b17;border:1px solid #738778;border-radius:6px;padding:10px;margin-top:8px}.account-shell button,.account-shell .account-button{display:inline-block;font:inherit;background:#c3dfa7;color:#192d20;padding:9px 18px;border:1px solid #c3dfa7;border-radius:7px;cursor:pointer;margin:4px}.account-shell button:disabled{opacity:.55;cursor:wait}.account-shell :focus-visible{outline:3px solid #e1f5cb;outline-offset:3px}.account-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-top:15px}.account-shell [role=alert]{color:#ffd2c4;border:1px solid #ba806e;padding:15px;border-radius:8px}.account-shell [role=status]{color:#c3dfa7}@media(max-width:550px){.account-shell header{flex-wrap:wrap;padding:18px}.account-shell nav{gap:18px;font-size:14px}.account-shell main{padding:24px 18px}.account-panel{padding:18px}}
+
+/* Voltara account & authentication design system. The font is provided globally. */
+.account-shell {
+  --account-bg: #0b1513;
+  --account-card: #14211c;
+  --account-line: rgba(193, 225, 177, .16);
+  --account-text: #eff5ee;
+  --account-muted: #9fb0a5;
+  --account-accent: #c5e7a9;
+  min-height: 100dvh;
+  background: var(--account-bg);
+  color: var(--account-text);
+  font-family: Vazirmatn, "Vazir Fallback", Tahoma, sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.account-shell *, .account-shell *::before, .account-shell *::after { box-sizing: border-box; }
+.account-shell a { color: inherit; text-decoration: none; }
+.account-shell .account-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 17px clamp(20px, 5vw, 72px);
+  border-bottom: 1px solid var(--account-line);
+  background: rgba(13, 25, 21, .96);
+}
+.account-brand { display: inline-flex; align-items: center; gap: 12px; color: #f6faef; font-size: 22px; font-weight: 700; line-height: 1.25; white-space: nowrap; }
+.account-brand-icon { display: grid; place-items: center; height: 42px; width: 42px; border-radius: 12px; color: #13251b; background: var(--account-accent); font: 30px/1 Arial, sans-serif; }
+.account-brand small { display: block; color: #8eae99; font: 9px/1.4 Arial, sans-serif; letter-spacing: 2px; text-align: left; margin-top: 5px; }
+.account-topbar nav { display: flex; align-items: center; gap: 26px; color: #c6d5c7; font-size: 13px; }
+.account-topbar nav a:hover, .auth-back-link:hover, .auth-inline-link:hover, .auth-switch a:hover { color: var(--account-accent); }
+.account-home-link { border: 1px solid #42594b; padding: 7px 15px; border-radius: 10px; white-space: nowrap; }
+.account-shell :focus-visible { outline: 3px solid var(--account-accent); outline-offset: 4px; }
+.account-shell h1, .account-shell h2, .account-shell h3, .account-shell p { overflow-wrap: anywhere; }
+
+/* Two-column welcome screen. Direction is RTL, feature on the right, form on the left. */
+.account-auth-layout { max-width: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, .97fr) minmax(0, 1.03fr); min-height: calc(100dvh - 77px); }
+.account-auth-feature {
+  position: relative; overflow: hidden; isolation: isolate; display: flex; align-items: center;
+  padding: clamp(36px, 6vw, 85px); margin: 0; min-width: 0;
+  border-left: 1px solid var(--account-line);
+  background: radial-gradient(ellipse at 53% 42%, #274938 0%, #172d24 44%, #10211b 73%, #0f201a 100%);
+}
+.account-auth-feature::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .3;
+  background-image: linear-gradient(rgba(211,238,195,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(211,238,195,.09) 1px,transparent 1px);
+  background-size: 48px 48px; mask-image: linear-gradient(to bottom, transparent, #000 28%, #000 70%, transparent);
+}
+.auth-feature-orbit { position: absolute; z-index: -1; width: 680px; height: 680px; border: 1px solid rgba(189,227,171,.10); border-radius: 50%; pointer-events: none; }
+.auth-feature-orbit--one { left: -390px; top: -350px; }
+.auth-feature-orbit--two { right: -360px; bottom: -390px; }
+.auth-feature-inner { position: relative; width: 100%; max-width: 580px; margin-inline: auto; }
+.auth-feature-kicker { display: inline-flex; align-items: center; gap: 10px; color: #c8e5b6; font-size: 12px; font-weight: 600; }
+.auth-feature-dot { width: 7px; height: 7px; border-radius: 50%; background: #bce5a4; box-shadow: 0 0 16px #9bdb83; }
+.auth-feature-visual { position: relative; display: grid; place-items: center; width: min(100%, 310px); height: 270px; margin: 18px auto 12px; }
+.auth-visual-ring { position: absolute; display: block; border: 1px solid rgba(188,231,166,.32); transform: rotate(-25deg); border-radius: 35%; }
+.auth-visual-ring--one { height: 200px; width: 200px; box-shadow: 0 0 70px rgba(184,233,164,.06); }
+.auth-visual-ring--two { height: 145px; width: 145px; border-color: rgba(194,231,172,.52); transform: rotate(25deg); }
+.auth-visual-core { display: grid; place-items: center; width: 94px; height: 94px; border-radius: 25px; color: #14291c; background: linear-gradient(145deg, #e2f8c5, #9ecb83); font: 70px/1 Arial, sans-serif; box-shadow: 0 12px 60px #0005, 0 0 65px #b8db9b39; transform: rotate(-9deg); }
+.auth-visual-node { position: absolute; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #e5f8d0; background: #6a986b; box-shadow: 0 0 20px #a5d88a; }
+.auth-visual-node--one { right: 22%; top: 18%; }
+.auth-visual-node--two { left: 17%; bottom: 29%; }
+.auth-visual-node--three { right: 28%; bottom: 16%; }
+.auth-feature-eyebrow { color: #aac6ae; font: 10px/1.5 Arial, sans-serif; letter-spacing: 3px; text-align: right; margin: 16px 0 10px; }
+.account-auth-feature h2 { font-size: clamp(26px, 3.2vw, 42px); line-height: 1.6; letter-spacing: -.7px; font-weight: 700; margin: 0 0 12px; }
+.account-auth-feature h2 span { color: var(--account-accent); }
+.auth-feature-description { color: #c1d1c2; max-width: 460px; font-size: 14px; line-height: 2.1; margin: 0; }
+.auth-feature-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+.auth-feature-tags span { font-size: 11px; border: 1px solid #527158; color: #d0e5c5; border-radius: 100px; padding: 5px 12px; }
+
+.account-auth-content { display: flex; justify-content: center; align-items: center; min-width: 0; padding: 45px clamp(22px, 5vw, 86px); }
+.account-auth-content-inner { width: min(100%, 460px); }
+.auth-back-link { display: inline-flex; align-items: center; color: var(--account-muted) !important; font-size: 12px; margin-bottom: 35px; }
+.auth-page-heading { margin-bottom: 28px; }
+.auth-page-kicker { margin: 0 0 7px; font-size: 12px; font-weight: 600; color: var(--account-accent); }
+.account-shell .auth-page-heading h1 { font-size: clamp(28px, 3vw, 38px); letter-spacing: -.5px; font-weight: 700; line-height: 1.5; margin: 0; }
+.account-panel { background: #13211b; border: 1px solid var(--account-line); border-radius: 18px; padding: clamp(23px, 3vw, 36px); box-shadow: 0 25px 80px #0002; }
+.account-shell--auth .account-panel { margin: 0; }
+.auth-intro-text { font-size: 13px; line-height: 2; color: #b6c7b8; margin: 0 0 23px; }
+.auth-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #0c1914; border: 1px solid #2d4233; border-radius: 12px; padding: 4px; margin-bottom: 24px; }
+.auth-switch a { display: flex; align-items: center; justify-content: center; padding: 9px 10px; border-radius: 9px; font-weight: 600; font-size: 13px; color: #9eada2; transition: background .15s ease, color .15s ease; }
+.auth-switch a[aria-current="page"] { color: #17321f; background: var(--account-accent); box-shadow: 0 2px 12px #0004; }
+.account-auth-form { display: grid; gap: 19px; margin: 0; }
+.auth-field { display: grid; gap: 8px; margin: 0; }
+.auth-field-label { display: flex; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; color: #e8f0e5; }
+.auth-input-wrap { position: relative; display: flex; align-items: center; min-width: 0; }
+.auth-input-icon { position: absolute; right: 15px; color: #98af9b; pointer-events: none; }
+.account-shell .auth-input {
+  display: block; width: 100%; height: 52px; min-width: 0; margin: 0;
+  border: 1px solid #405749; border-radius: 11px; padding: 11px 44px 11px 16px;
+  background: #0d1915; color: #f1f6ec; font: inherit; font-size: 14px;
+  line-height: normal; direction: ltr; text-align: left;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.account-shell .auth-input::placeholder { color: #738779; opacity: 1; }
+.account-shell .auth-input:focus { outline: none; border-color: #aacf96; box-shadow: 0 0 0 3px #b9e5a019; }
+.auth-password-toggle { position: absolute; left: 7px; width: 38px; height: 38px; border: 0; background: none; color: #a3b7a4; border-radius: 8px; display: grid; place-items: center; cursor: pointer; padding: 0; }
+.auth-password-toggle:hover { color: #ebf6df; background: #23372a; }
+.auth-hint { color: #9aaea0; font-size: 11px; margin: -3px 0 0; }
+.auth-form-support { margin-top: -8px; display: flex; justify-content: flex-start; }
+.auth-inline-link { color: var(--account-accent) !important; font-size: 12px; font-weight: 500; }
+.account-shell .auth-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; min-height: 53px; margin: 3px 0 0; padding: 12px 18px;
+  background: var(--account-accent); color: #192d20; border: 1px solid var(--account-accent);
+  border-radius: 11px; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.account-shell .auth-submit:hover:not(:disabled) { background: #dbf2c4; transform: translateY(-1px); }
+.account-shell button:disabled { opacity: .58; cursor: not-allowed; }
+.auth-feedback { padding: 12px 14px; margin: 16px 0 0; border-radius: 10px; line-height: 1.9; font-size: 12px; }
+.auth-feedback--error { border: 1px solid #ad7366; color: #ffdbd1; background: #502e2b33; }
+.auth-feedback--success { border: 1px solid #658f6e; color: #c8ebba; background: #23422f55; }
+.auth-panel-footer { border-top: 1px solid var(--account-line); margin-top: 24px; padding-top: 20px; text-align: center; font-size: 12px; color: var(--account-muted); }
+.auth-panel-footer a { color: var(--account-accent); font-weight: 700; }
+.auth-footnote { margin: 26px 0 0; color: #70897a; font-size: 10px; text-align: center; letter-spacing: .2px; }
+
+/* Signed-in pages share the palette but retain a simple content width. */
+.account-dashboard-main { max-width: 1040px; margin: auto; padding: 35px 24px 70px; }
+.account-page-heading h1 { font-size: 32px; margin: 12px 0 18px; }
+.account-dashboard-main .account-panel { margin: 20px 0; }
+.account-dashboard-main h2 { font-size: 22px; margin: 0 0 8px; }
+.account-dashboard-main p { color: #c1d2c3; }
+.account-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
+.account-actions a { color: var(--account-accent); }
+.account-shell input:not(.auth-input), .account-shell textarea, .account-shell select {
+  display: block; width: 100%; max-width: 100%; font: inherit; color: inherit;
+  background: #0d1915; border: 1px solid #56705c; border-radius: 9px; padding: 10px 13px; margin-top: 7px;
+}
+.account-shell .account-dashboard-main button, .account-shell .account-button {
+  display: inline-block; font: inherit; background: var(--account-accent); color: #192d20;
+  border: 1px solid var(--account-accent); border-radius: 9px; padding: 10px 17px; cursor: pointer;
+}
+.account-dashboard-main label { display: block; margin: 14px 0; }
+.account-shell [role="alert"]:not(.auth-feedback) { border: 1px solid #ad7366; color: #ffdbd1; padding: 12px; border-radius: 10px; }
+.account-shell [role="status"]:not(.auth-feedback) { color: var(--account-accent); }
+
+@media (max-width: 960px) {
+  .account-auth-layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+  .account-auth-feature { padding: 34px; }
+  .account-auth-content { padding: 38px 28px; }
+  .auth-feature-visual { height: 220px; }
+}
+@media (max-width: 700px) {
+  .account-shell .account-topbar { padding: 14px 19px; }
+  .account-topbar nav { gap: 12px; font-size: 12px; }
+  .account-brand { font-size: 19px; }
+  .account-brand-icon { height: 37px; width: 37px; font-size: 28px; }
+  .account-auth-layout { display: flex; flex-direction: column; }
+  .account-auth-feature { order: 2; border-left: 0; border-top: 1px solid var(--account-line); padding: 25px 24px 29px; }
+  .account-auth-feature .auth-feature-visual, .account-auth-feature .auth-feature-orbit, .account-auth-feature .auth-feature-eyebrow, .account-auth-feature .auth-feature-tags { display: none; }
+  .account-auth-feature h2 { font-size: 20px; margin: 11px 0 4px; }
+  .account-auth-feature h2 br { display: none; }
+  .auth-feature-description { font-size: 12px; }
+  .account-auth-content { order: 1; flex: 1; padding: 27px 20px 36px; }
+  .account-auth-content-inner { max-width: 480px; }
+  .auth-back-link { margin-bottom: 22px; }
+  .auth-page-heading { margin-bottom: 21px; }
+  .account-panel { padding: 23px 20px; border-radius: 16px; }
+  .account-dashboard-main { padding: 25px 18px 55px; }
+}
+@media (max-width: 390px) {
+  .account-home-link { padding: 6px 10px; }
+  .account-brand small { font-size: 8px; letter-spacing: 1px; }
+  .account-shell--auth .account-panel { padding: 20px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .account-shell *, .account-shell *::before, .account-shell *::after { transition: none !important; }
+}
