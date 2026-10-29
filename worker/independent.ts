@@ -5,6 +5,9 @@ export default {
     const url = new URL(request.url);
     let path: string;
     try { path = decodeURIComponent(url.pathname); } catch { return new Response('Invalid path', {status:400}); }
+    // Generated CSS and JavaScript are public build assets, not application routes.
+    // run_worker_first also sends these requests here, so serve them explicitly.
+    if (path.startsWith('/_next/static/')) return env.ASSETS.fetch(request);
     const publicAssets: Record<string,string> = {'/fonts/vazir.woff2':'/transformer/vendor/vazir.woff2','/reference-manual.pdf':'/transformer/reference-manual.pdf'};
     if (publicAssets[path]) return env.ASSETS.fetch(new Request(new URL(publicAssets[path],url),request));
     if (path === '/transformer' || path.startsWith('/transformer/')) {
