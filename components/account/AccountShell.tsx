@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import './account.css';
 
 type AccountShellProps = {
@@ -10,13 +11,13 @@ export default function AccountShell({ title, children, auth = false }: AccountS
   return (
     <div className={'account-shell' + (auth ? ' account-shell--auth' : '')} dir="rtl">
       <header className="account-topbar">
-        <a className="account-brand" href="/" aria-label="ولتارا، صفحه اصلی">
+        <Link className="account-brand" href="/" aria-label="ولتارا، صفحه اصلی">
           <span className="account-brand-icon" aria-hidden="true">ϟ</span>
           <span>ولتارا <small dir="ltr">VOLTARA ATLAS</small></span>
-        </a>
+        </Link>
         <nav aria-label="ناوبری حساب">
-          {!auth && <><a href="/notes">یادداشت‌ها</a><a href="/bookmarks">نشانک‌ها</a><a href="/account">حساب من</a></>}
-          <a className="account-home-link" href="/">بازگشت به اطلس <span aria-hidden="true">←</span></a>
+          {!auth && <><Link href="/notes">یادداشت‌ها</Link><Link href="/bookmarks">نشانک‌ها</Link><Link href="/account">حساب من</Link></>}
+          <Link className="account-home-link" href="/">بازگشت به اطلس <span aria-hidden="true">←</span></Link>
         </nav>
       </header>
 
@@ -43,7 +44,7 @@ export default function AccountShell({ title, children, auth = false }: AccountS
           </aside>
           <div className="account-auth-content">
             <div className="account-auth-content-inner">
-              <a className="auth-back-link" href="/">← بازگشت به صفحه اصلی</a>
+              <Link className="auth-back-link" href="/">← بازگشت به صفحه اصلی</Link>
               <div className="auth-page-heading">
                 <p className="auth-page-kicker">به ولتارا خوش آمدید</p>
                 <h1>{title}</h1>
@@ -56,7 +57,7 @@ export default function AccountShell({ title, children, auth = false }: AccountS
       ) : (
         <main id="main" className="account-dashboard-main">
           <div className="account-page-heading">
-            <a className="auth-back-link" href="/">← کتابخانه تجهیزات</a>
+            <Link className="auth-back-link" href="/">← کتابخانه تجهیزات</Link>
             <h1>{title}</h1>
           </div>
           {children}

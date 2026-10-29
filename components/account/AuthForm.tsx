@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import { useState, type FormEvent } from 'react';
 import { ArrowLeft, Eye, EyeOff, LockKeyhole, Mail, UserRound } from 'lucide-react';
@@ -106,8 +107,8 @@ export default function AuthForm({
 
       {(mode === 'login' || mode === 'register') && (
         <nav className="auth-switch" aria-label="انتخاب نوع دسترسی">
-          <a href={loginUrl} aria-current={mode === 'login' ? 'page' : undefined}>ورود</a>
-          <a href={registerUrl} aria-current={mode === 'register' ? 'page' : undefined}>ثبت‌نام</a>
+          <Link href={loginUrl} aria-current={mode === 'login' ? 'page' : undefined}>ورود</Link>
+          <Link href={registerUrl} aria-current={mode === 'register' ? 'page' : undefined}>ثبت‌نام</Link>
         </nav>
       )}
 
@@ -159,7 +160,7 @@ export default function AuthForm({
 
           {mode === 'login' && (
             <div className="auth-form-support">
-              <a className="auth-inline-link" href="/forgot-password">گذرواژه را فراموش کرده‌اید؟</a>
+              <Link className="auth-inline-link" href="/forgot-password">گذرواژه را فراموش کرده‌اید؟</Link>
             </div>
           )}
 
@@ -184,9 +185,9 @@ export default function AuthForm({
       )}
 
       <div className="auth-panel-footer">
-        {mode === 'login' ? <>هنوز حساب ندارید؟ <a href={registerUrl}>ثبت‌نام کنید</a></>
-          : mode === 'register' ? <>قبلاً ثبت‌نام کرده‌اید؟ <a href={loginUrl}>وارد شوید</a></>
-            : <>بازگشت به <a href={loginUrl}>صفحه ورود</a></>}
+        {mode === 'login' ? <>هنوز حساب ندارید؟ <Link href={registerUrl}>ثبت‌نام کنید</Link></>
+          : mode === 'register' ? <>قبلاً ثبت‌نام کرده‌اید؟ <Link href={loginUrl}>وارد شوید</Link></>
+            : <>بازگشت به <Link href={loginUrl}>صفحه ورود</Link></>}
       </div>
     </>
   );
