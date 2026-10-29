@@ -1,4 +1,4 @@
 import AccountShell from '../../components/account/AccountShell';
 import AuthForm from '../../components/account/AuthForm';
 export const dynamic='force-dynamic';
-export default async function Page({searchParams}:{searchParams:Promise<{returnTo?:string;token?:string;error?:string}>}){const params=await searchParams;return <AccountShell title="بازیابی گذرواژه"><section className="account-panel"><AuthForm mode="forgot" {...params}/></section></AccountShell>;}
+export default async function Page({searchParams}:{searchParams:Promise<{returnTo?:string;token?:string;error?:string}>}){const params=await searchParams;return <AccountShell auth title="بازیابی گذرواژه"><section className="account-panel"><AuthForm mode="forgot" {...params}/></section></AccountShell>;}
