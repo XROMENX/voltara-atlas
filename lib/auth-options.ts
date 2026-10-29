@@ -8,13 +8,13 @@ export function createVoltaraAuth(options: {database:BetterAuthOptions['database
     advanced: {ipAddress: {ipAddressHeaders: ['cf-connecting-ip']}},
     emailAndPassword: {
       enabled: true,
-      requireEmailVerification: true,
+      requireEmailVerification: false,
       minPasswordLength: 12,
       revokeSessionsOnPasswordReset: true,
       sendResetPassword: async ({user, url}) => options.sendEmail(user.email, 'بازیابی گذرواژه ولتارا', url),
     },
     emailVerification: {
-      sendOnSignUp: true,
+      sendOnSignUp: false,
       sendVerificationEmail: async ({user, url}) => options.sendEmail(user.email, 'تأیید حساب ولتارا', url),
     },
     rateLimit: { enabled: true, storage: 'database' },

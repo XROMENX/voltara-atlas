@@ -16,3 +16,11 @@ test('the Worker gates direct and encoded model asset URLs before accessing stor
  session={user:{id:'valid-user'}};
  const allowed=await exports.default.fetch(new Request('https://voltara.test/transformer/app.js'),env,{});assert.equal(allowed.status,200);assert.equal(reads,1);assert.equal(allowed.headers.get('cache-control'),'private, no-store');
 });
+
+test('offline service worker cannot bypass model authentication using old cache entries',()=>{
+ const sw=readFileSync(new URL('../public/transformer/sw.js',import.meta.url),'utf8');
+ assert.match(sw,/caches\.delete/);
+ assert.doesNotMatch(sw,/caches\.open/);
+ assert.doesNotMatch(sw,/caches\.match/);
+ assert.match(sw,/event\.respondWith\(fetch\(event\.request\)\)/);
+});
