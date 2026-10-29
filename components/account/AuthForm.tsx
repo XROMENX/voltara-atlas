@@ -114,31 +114,31 @@ export default function AuthForm({
       {!done && (
         <form className="account-auth-form" onSubmit={submit}>
           {mode === 'register' && (
-            <label className="auth-field" htmlFor="auth-name">
-              <span className="auth-field-label">نام و نام خانوادگی</span>
+            <div className="auth-field">
+              <label className="auth-field-label" htmlFor="auth-name">نام و نام خانوادگی</label>
               <span className="auth-input-wrap">
                 <UserRound className="auth-input-icon" size={18} aria-hidden="true" />
                 <input className="auth-input auth-input--rtl" id="auth-name" name="name" type="text"
                   autoComplete="name" placeholder="نام شما" required maxLength={100} />
               </span>
-            </label>
+            </div>
           )}
 
           {mode !== 'reset' && (
-            <label className="auth-field" htmlFor="auth-email">
-              <span className="auth-field-label">ایمیل</span>
+            <div className="auth-field">
+              <label className="auth-field-label" htmlFor="auth-email">ایمیل</label>
               <span className="auth-input-wrap">
                 <Mail className="auth-input-icon" size={18} aria-hidden="true" />
                 <input className="auth-input" id="auth-email" name="email" type="email"
                   inputMode="email" autoComplete="email" autoCapitalize="none" spellCheck={false}
                   placeholder="name@example.com" required maxLength={254} />
               </span>
-            </label>
+            </div>
           )}
 
           {mode !== 'forgot' && (
-            <label className="auth-field" htmlFor="auth-password">
-              <span className="auth-field-label">{mode === 'reset' ? 'گذرواژه جدید' : 'گذرواژه'}</span>
+            <div className="auth-field">
+              <label className="auth-field-label" htmlFor="auth-password">{mode === 'reset' ? 'گذرواژه جدید' : 'گذرواژه'}</label>
               <span className="auth-input-wrap">
                 <LockKeyhole className="auth-input-icon" size={18} aria-hidden="true" />
                 <input className="auth-input auth-input--password" id="auth-password" name="password"
@@ -154,7 +154,7 @@ export default function AuthForm({
                 </button>
               </span>
               {mode !== 'login' && <span className="auth-hint">برای امنیت حساب، گذرواژه باید حداقل ۱۲ نویسه داشته باشد.</span>}
-            </label>
+            </div>
           )}
 
           {mode === 'login' && (
