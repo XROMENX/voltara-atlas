@@ -10,7 +10,9 @@
     "binding": "ASSETS",
     "run_worker_first": [
       "/*",
-      "!/_next/static/*"
+      "!/_next/static/*",
+      "!/vendor/three-r170.module.js",
+      "!/vendor/OrbitControls-r170.js"
     ]
   },
   "d1_databases": [

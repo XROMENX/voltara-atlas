@@ -20,9 +20,15 @@ export default {
       }
       const asset = await env.ASSETS.fetch(request);
       const response = new Response(asset.body, asset);
-      response.headers.set('Cache-Control', 'private, no-store');
+      // Revalidate reusable viewer code on every visit, after the session check.
+      // A matching ETag saves the transfer without allowing access after logout.
+      response.headers.set('Cache-Control', /\.(?:js|css)$/.test(path)
+        ? 'private, no-cache, must-revalidate'
+        : 'private, no-store');
+      response.headers.set('Vary', 'Cookie');
       return response;
     }
     return handler.fetch(request, env, ctx);
   }
 };
+
